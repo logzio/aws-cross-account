@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: "This template creates a destination for the Kinesis stream we created in a different region"
+Parameters:
+  RoleArn:
+    Type: "String"
+    Description: "The ARN of the Role you've created in your main stack. You can find it in the main stack's Outputs tab, under LogzioCrossAccountRole"
+  KinesisStreamArn:
+    Type: "String"
+    Description: "The ARN of the Kinesis Stream you've created in your main stack. You can find it in the main stack's Outputs tab, under LogzioCrossAccountKinesisStreamArn."
+  SendingAccounts:
+    Type: "String"
+    Description: 'Comma-delimited list (no spaces) of the sending accounts numbers. Each account should be under double quotes: "1234","5678","9012".'
+
+Outputs:
+    LogzioCrossAccountDestinationARN:
+      Description: "This region destination's ARN"
+      Value: !GetAtt LogzioCrossAccountDestination.Arn
+    LogzioCrossAccountDestinationName:
+      Description: "This region destination's name"
+      Value: !Ref LogzioCrossAccountDestination
+
+Resources:
+  LogzioCrossAccountDestination:
+    Type: AWS::Logs::Destination
+    Properties:
+      DestinationName: "LogzioCrossAccountDestination"
+      RoleArn: !Ref RoleArn
+      TargetArn: !Ref KinesisStreamArn
+      DestinationPolicy: !Sub '{"Version":"2012-10-17","Statement":[{"Sid":"","Effect":"Allow","Principal":{"AWS":[${SendingAccounts}]},"Action":"logs:PutSubscriptionFilter","Resource":"arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:destination:LogzioCrossAccountDestination"}]}'
