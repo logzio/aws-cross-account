@@ -32,9 +32,15 @@ def run():
             aws_secret_access_key=AWS_SECRET_KEY,
             region_name=region
         )
-
-        # upload lambda function
         bucket_name = f'{BUCKET_BASE}-{region}'
+        # validate that the version number is correct, so we do not override an existing version:
+        result = s3_client.list_objects(Bucket=bucket_name, Prefix=f'{PATH_PREFIX}')
+        print(f'Result: {result}')
+        if 'Contents' in result:
+            print('ERROR! This version already exists. Please bump version with variable VERSION, and run the script again!')
+            os.remove(zip_path)
+            exit(1)
+        # upload lambda function
         uploaded = upload_file(s3_client, bucket_name, LAMBDA_KEY, zip_path, region)
         if not uploaded:
             sys.exit('Error occurred while uploading lambda zip')
