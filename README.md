@@ -235,3 +235,7 @@ Click on next in steps 3-4, and check the acknowledgment checkbox, and click on 
 << TODO - SCREENSHOTS >>
 
 #### Wait for the stack to be updated
+
+### Changelog:
+
+- **0.0.1:** Initial release.
