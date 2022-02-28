@@ -27,9 +27,9 @@ The landing account is the account that will receive the logs from your multiple
 
 Select the button below to create a new stack dedicated to receiving logs into a Kinesis stream, then send them to Logz.io with a Lambda function.
 
-| AWS Region | Launch a stack                                                                                                                                                                                                                                                                                        |
-| --- |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `us-east-1` | [![Deploy to AWS](https://dytvr9ot2sszz.cloudfront.net/logz-docs/lights/LightS-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=aws-cross-account-landing&templateURL=https://logzio-aws-integrations-us-east-1.s3.amazonaws.com/<<TODO>>.yaml) |
+| AWS Region | Launch a stack                                                                                                                                                                                                                                                                                     |
+| --- |----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `us-east-1` | [![Deploy to AWS](https://dytvr9ot2sszz.cloudfront.net/logz-docs/lights/LightS-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=aws-cross-account-main&templateURL=https://integrations-testing.s3.amazonaws.com/cross-accounts/0.0.1/sam-template-main.yaml) |
 
 #### Step 1 - Specify template
 
@@ -82,9 +82,9 @@ Follow these instructions to setup a cloudformation stack that will deploy the D
 
 Select the button below to create a new stack.
 
-| AWS Region | Launch a stack                                                                                                                                                                                                                                                                                        |
-| --- |-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `us-east-1` | [![Deploy to AWS](https://dytvr9ot2sszz.cloudfront.net/logz-docs/lights/LightS-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=aws-cross-account-landing&templateURL=https://logzio-aws-integrations-us-east-1.s3.amazonaws.com/<<TODO>>.yaml) |
+| AWS Region | Launch a stack                                                                                                                                                                                                                                                                                            |
+| --- |-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `us-east-1` | [![Deploy to AWS](https://dytvr9ot2sszz.cloudfront.net/logz-docs/lights/LightS-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=aws-cross-account-destination&templateURL=https://integrations-testing.s3.amazonaws.com/cross-accounts/0.0.1/sam-template-destination.yaml) |
 
 #### Step 1 - Specify template
 
