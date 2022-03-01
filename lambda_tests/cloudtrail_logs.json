@@ -1,0 +1,16 @@
+{
+   "messageType":"DATA_MESSAGE",
+   "owner":"123456789012",
+   "logGroup":"/aws/cloudtrail/some-cloudtrail",
+   "logStream":"123456789012_CloudTrail_us-east-1_2",
+   "subscriptionFilters":[
+      "filter"
+   ],
+   "logEvents":[
+      {
+         "id":"31205876980236745966101546382001545872688306806178775040",
+         "timestamp":1646154804950,
+         "message":"{\"eventVersion\":\"1.08\",\"userIdentity\":{\"type\":\"IAMUser\",\"principalId\":\"50DF8F78E0W55ESA4DE7R\",\"arn\":\"arn:aws:iam::123456789012:user/s3\"}}"
+      }
+   ]
+}
