@@ -61,7 +61,7 @@ def upload_file(s3_client, bucket, key, file_to_upload, region):
     max_retries = 5
     for attempt in range(max_retries):
         try:
-            response = s3_client.upload_file(file_to_upload, bucket, key)
+            response = s3_client.upload_file(file_to_upload, bucket, key, ExtraArgs={'ACL': 'public-read'})
         except Exception as e:
             print(e)
             time.sleep(3)
