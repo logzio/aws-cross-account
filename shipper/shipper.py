@@ -145,7 +145,7 @@ class LogzioShipper(object):
                 "Missing logz.io account token environment variable: {}".format(e))
             raise
         try:
-            self._compress = os.environ['COMPRESS'].lower() == "true"
+            self._compress = os.getenv('COMPRESS', 'true').lower() == "true"
         except KeyError as e:
             self._compress = False
         self._logs = GzipLogRequest(self.MAX_BULK_SIZE_IN_BYTES) \
