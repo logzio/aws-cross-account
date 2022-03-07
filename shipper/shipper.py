@@ -147,7 +147,7 @@ class LogzioShipper(object):
         try:
             self._compress = os.getenv('COMPRESS', 'true').lower() == "true"
         except KeyError as e:
-            self._compress = False
+            self._compress = True
         self._logs = GzipLogRequest(self.MAX_BULK_SIZE_IN_BYTES) \
             if self._compress \
             else StringLogRequest(self.MAX_BULK_SIZE_IN_BYTES)
