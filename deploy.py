@@ -79,6 +79,7 @@ def edit_and_upload_template(s3_client, bucket_name, region):
         base_file_path = './sam-templates/sam-template-main-default.yaml'
         file_path = './sam-templates/sam-template-main.yaml'
         yaml = YAML()
+        yaml.preserve_quotes = True
         with open(base_file_path, 'r') as template_base:
             template_yaml = yaml.load(template_base)
             template_yaml['Resources']['LogzioCrossAccountKinesisLambda']['Properties']['CodeUri']['Bucket'] = bucket_name
