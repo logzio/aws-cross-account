@@ -1,9 +1,11 @@
 # aws-cross-account
 
-Deploy this integration to simultaneously ship logs from multiple AWS accounts to Logz.io. This integration uses two types of accounts:
+Deploy this integration to simultaneously ship logs from multiple AWS accounts to Logz.io.
 
-* Landing account, which receives logs from your multiple AWS accounts and sends them to Logz.io.
-* Sending accounts, which send logs from your AWS services to the landing account.
+This integration uses two types of accounts:
+
+* **Landing account**, which receives logs from your multiple AWS accounts and sends them to Logz.io.
+* **Sending accounts**, which send logs from your AWS services to the landing account.
 
 ## Architecture overview
 
