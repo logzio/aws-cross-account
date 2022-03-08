@@ -10,6 +10,8 @@ from shipper.shipper import LogzioShipper
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
+DEFAULT_TYPE = 'aws-cross-account'
+
 
 def _extract_record_data(data):
     try:
@@ -27,9 +29,14 @@ def _extract_record_data(data):
 def get_type_from_log_group(log_group):
     log_group_array = log_group.split("/")
     service_index = 2
-    service_name = log_group_array[service_index]
-    if service_name.lower() == 'event' or service_name == 'events':
-        return log_group_array[service_index + 1]
+    try:
+        service_name = log_group_array[service_index]
+        if service_name.lower() == 'event' or service_name == 'events':
+            return log_group_array[service_index + 1]
+    except Exception as e:
+        logger.warning(f'Could not find the type for log group: {log_group}. Got exception: {e}')
+        logger.warning(f'Using default type {DEFAULT_TYPE} for this log')
+        return DEFAULT_TYPE
     return log_group_array[service_index]
 
 
@@ -54,8 +61,8 @@ def _extract_logs_from_data(data):
         if 'logGroup' in new_log:
             new_log["type"] = get_type_from_log_group(new_log["logGroup"])
         else:
-            logger.warning('Could not find logGroup field in log. Setting log with default type aws-cross-account')
-            new_log["type"] = "aws-cross-account"
+            logger.warning(f'Could not find logGroup field in log. Setting log with default type {DEFAULT_TYPE}')
+            new_log["type"] = DEFAULT_TYPE
         logs.append(new_log)
     return logs
 
