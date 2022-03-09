@@ -88,7 +88,7 @@ Confirm that you acknowledge that AWS CloudFormation might create IAM resources,
 
 **Note:** This procedure is only required if you need to send logs from regions that are different to the region that the main stack is deployed in.
 
-Click the button that matches the region you'd like to deploy your main stack to:
+Click the button that matches the region you'd like to deploy your destination stack to:
 
 | AWS Region       | Launch a stack                                                                                                                                                                                                                                                                                                                                               |
 |------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
