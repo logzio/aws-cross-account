@@ -1,0 +1,41 @@
+{
+    "messageType": "DATA_MESSAGE",
+    "owner": "123456789012",
+    "logGroup": "/aws/lambda/my_function",
+    "logStream": "2022/03/01/[$LATEST]01a01a01a01a01a01a01a01a01a01a01",
+    "subscriptionFilters": [
+        "log_filter_test"
+    ],
+    "logEvents": [
+        {
+            "id": "12345678901234567890123456789012345678901234567890123456",
+            "timestamp": 1646144577438,
+            "message": "START RequestId: 12345ed8-e6ad-4a66-ab4d-a7391fc471eb Version: $LATEST\\n"
+        },
+        {
+            "id": "12345678901234567890123456789012345678901234567890123457",
+            "timestamp": 1646144577441,
+            "message": "Hello World! 0\\n"
+        },
+        {
+            "id": "12345678901234567890123456789012345678901234567890123458",
+            "timestamp": 1646144577441,
+            "message": "Hello World! 1\\n"
+        },
+        {
+            "id": "12345678901234567890123456789012345678901234567890123459",
+            "timestamp": 1646144577441,
+            "message": "Hello World! 2\\n"
+        },
+        {
+            "id": "12345678901234567890123456789012345678901234567890123460",
+            "timestamp": 1646144577442,
+            "message": "END RequestId: 12345ed8-e6ad-4a66-ab4d-a7391fc471eb\\n"
+        },
+        {
+            "id": "12345678901234567890123456789012345678901234567890123461",
+            "timestamp": 1646144577442,
+            "message": "REPORT RequestId: 12345ed8-e6ad-4a66-ab4d-a7391fc471eb\\tDuration: 1.04 ms\\tBilled Duration: 2 ms\\tMemory Size: 512 MB\\tMax Memory Used: 37 MB\\t\\n"
+        }
+    ]
+}

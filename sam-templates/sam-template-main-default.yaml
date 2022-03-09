@@ -1,0 +1,115 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: "This template creates Kinesis stream, destination, lambda function and roles, that allow receiving logs from other AWS accounts, and send them to Logz.io"
+Parameters:
+  LogzioREGION:
+    Type: "String"
+    Description: "Two-letter region code, or blank for US East (Northern Virginia). This determines your listener URL
+    (where you're shipping the logs to) and API URL. You can find your region code in the Regions and URLs at
+    https://docs.logz.io/user-guide/accounts/account-region.html#regions-and-urls table"
+    Default: "us"
+
+  LogzioTOKEN:
+    Type: "String"
+    Description: "The token of the account you want to ship to. Can be found at https://app.logz.io/#/dashboard/settings/general"
+
+  LogzioCOMPRESS:
+    Type: "String"
+    Description: "If true, the Lambda will send compressed logs. If false, the Lambda will send uncompressed logs."
+    Default: "true"
+
+  KinesisStreamBatchSize:
+    Type: "Number"
+    Description: "The largest number of records that will be read from your stream at once."
+    Default: "100"
+
+  AccountsArns:
+    Type: "CommaDelimitedList"
+    Description: "Comma-delimited list (no spaces) of all ARNs involved in this integration. This includes ARNs of the landing account and the accounts you'd like to send logs from. The ARNs should be specified as follows: arn:aws:logs:*:<<ACCOUNT_NUMBER>>:*"
+
+  SendingAccounts:
+    Type: "String"
+    Description: "Comma-delimited list (no spaces) of account numbers of the accounts you'd like to send logs from. Each account number should be wrapped in double-quotes."
+
+
+Outputs:
+    LogzioCrossAccountKinesisStreamArn:
+      Description: "Logz.io Kinesis stream ARN"
+      Value: !GetAtt CrossAccountReceiverKinesisStream.Arn
+    LogzioCrossAccountDestinationARN:
+      Description: "This region destination's ARN"
+      Value: !GetAtt LogzioCrossAccountDestination.Arn
+    LogzioCrossAccountDestinationName:
+      Description: "This region destination's name"
+      Value: !Ref LogzioCrossAccountDestination
+    LogzioCrossAccountRole:
+      Description: "The Kinesis role that's being used for the destination"
+      Value: !GetAtt CWLogsToKinesisRole.Arn
+
+Resources:
+  CrossAccountReceiverKinesisStream:
+    Type: AWS::Kinesis::Stream
+    Properties:
+      Name: "LogzioCrossAccountReceiverKinesisStream"
+      ShardCount: 1
+  CWLogsToKinesisRole:
+    Type: AWS::IAM::Role
+    DependsOn: CrossAccountReceiverKinesisStream
+    Properties:
+      Description: "IAM role that will grant CloudWatch Logs the permission to put data into the Kinesis stream"
+      RoleName: "LogzioCrossAccountReceiverKinesisRole"
+      AssumeRolePolicyDocument:
+        Version: "2012-10-17"
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - logs.amazonaws.com
+            Condition:
+              StringLike:
+                aws:SourceArn: !Ref AccountsArns
+            Action:
+              - 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: "CrossAccountPolicy"
+          PolicyDocument:
+            Version: "2012-10-17"
+            Statement:
+                - Effect: Allow
+                  Action: kinesis:PutRecord
+                  Resource: !GetAtt CrossAccountReceiverKinesisStream.Arn
+  LogzioCrossAccountDestination:
+    Type: AWS::Logs::Destination
+    DependsOn:
+      - CrossAccountReceiverKinesisStream
+      - CWLogsToKinesisRole
+    Properties:
+      DestinationName: "LogzioCrossAccountDestination"
+      RoleArn: !GetAtt CWLogsToKinesisRole.Arn
+      TargetArn: !GetAtt CrossAccountReceiverKinesisStream.Arn
+      DestinationPolicy: !Sub '{"Version":"2012-10-17","Statement":[{"Sid":"","Effect":"Allow","Principal":{"AWS":[${SendingAccounts}]},"Action":"logs:PutSubscriptionFilter","Resource":"arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:destination:LogzioCrossAccountDestination"}]}'
+  LogzioCrossAccountKinesisLambda:
+    Type: 'AWS::Serverless::Function'
+    DependsOn: CrossAccountReceiverKinesisStream
+    Properties:
+      Runtime: python3.9
+      Handler: lambda_function.lambda_handler
+      CodeUri:
+        Bucket: ""
+        Key: ""
+      FunctionName: logzio-cross-account-shipper
+      MemorySize: 512
+      Timeout: 60
+      Events:
+        KinesisStream:
+          Type: Kinesis
+          Properties:
+            Stream: !Join [ "", [ "arn:", !Ref "AWS::Partition", ":kinesis:", !Ref "AWS::Region", ":", !Ref "AWS::AccountId", ":stream/", !Ref CrossAccountReceiverKinesisStream ] ]
+            StartingPosition: "LATEST"
+            BatchSize: !Ref KinesisStreamBatchSize
+      Environment:
+        Variables:
+          REGION: !Ref LogzioREGION
+          TOKEN: !Ref LogzioTOKEN
+          COMPRESS: !Ref LogzioCOMPRESS
