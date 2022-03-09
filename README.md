@@ -90,9 +90,9 @@ Confirm that you acknowledge that AWS CloudFormation might create IAM resources,
 
 Click the button that matches the region you'd like to deploy your main stack to:
 
-| AWS Region       | Launch a stack                                                                                                                                                                                                                                                                                                                                 |
-|------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `us-east-1`      | [![Deploy to AWS](https://dytvr9ot2sszz.cloudfront.net/logz-docs/lights/LightS-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=aws-cross-account-destination&templateURL=https://logzio-aws-integrations-us-east-1.s3.amazonaws.com/aws-cross-accounts/0.0.1/sam-template-destination.yaml)    |
+| AWS Region       | Launch a stack                                                                                                                                                                                                                                                                                                                                               |
+|------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `us-east-1`      | [![Deploy to AWS](https://dytvr9ot2sszz.cloudfront.net/logz-docs/lights/LightS-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=aws-cross-account-destination&templateURL=https://logzio-aws-integrations-us-east-1.s3.amazonaws.com/aws-cross-accounts/0.0.1/sam-template-destination.yaml)           |
 | `us-east-2`      | [![Deploy to AWS](https://dytvr9ot2sszz.cloudfront.net/logz-docs/lights/LightS-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-2#/stacks/new?stackName=aws-cross-account-destination&templateURL=https://logzio-aws-integrations-us-east-2.s3.amazonaws.com/aws-cross-accounts/0.0.1/sam-template-destination.yaml)           |
 | `us-west-1`      | [![Deploy to AWS](https://dytvr9ot2sszz.cloudfront.net/logz-docs/lights/LightS-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-1#/stacks/new?stackName=aws-cross-account-destination&templateURL=https://logzio-aws-integrations-us-west-1.s3.amazonaws.com/aws-cross-accounts/0.0.1/sam-template-destination.yaml)           |
 | `us-west-2`      | [![Deploy to AWS](https://dytvr9ot2sszz.cloudfront.net/logz-docs/lights/LightS-button.png)](https://console.aws.amazon.com/cloudformation/home?region=us-west-2#/stacks/new?stackName=aws-cross-account-destination&templateURL=https://logzio-aws-integrations-us-west-2.s3.amazonaws.com/aws-cross-accounts/0.0.1/sam-template-destination.yaml)           |
@@ -227,6 +227,6 @@ If required, specify the **Key** and **Value** parameters for the **Tags** and s
 
 Confirm that you acknowledge that AWS CloudFormation might create IAM resources, IAM resources with custom names, may require `CAPABILITY_AUTO_EXPAND` and select **Create stack**.
 
-### Changelog:
+## Changelog:
 
 - **0.0.1:** Initial release.
