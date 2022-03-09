@@ -44,7 +44,6 @@ def run():
         uploaded = upload_file(s3_client, bucket_name, LAMBDA_KEY, zip_path, region)
         if not uploaded:
             sys.exit('Error occurred while uploading lambda zip')
-        os.remove(zip_path)
         # handle + upload main sam template
         uploaded = edit_and_upload_template(s3_client, bucket_name, region)
         if not uploaded:
@@ -54,6 +53,7 @@ def run():
                                './sam-templates/sam-template-destination.yaml', region)
         if not uploaded:
             sys.exit('Error occurred while uploading destination sam template')
+    os.remove(zip_path)
     print('Finished uploading resources successfully!')
 
 
