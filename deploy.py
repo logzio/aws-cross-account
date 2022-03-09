@@ -24,6 +24,7 @@ SAM_DESTINATION_KEY = f'{PATH_PREFIX}/sam-template-destination.yaml'
 def run():
     zip_path = './lambda_function.zip'  # TODO: may need to change in the workflow
     zip_lambda_function()
+    successful_uploads = 0
 
     for region in AWS_REGIONS:
         s3_client = boto3.client(
@@ -35,7 +36,6 @@ def run():
         bucket_name = f'{BUCKET_BASE}-{region}'
         # validate that the version number is correct, so we do not override an existing version:
         result = s3_client.list_objects(Bucket=bucket_name, Prefix=f'{PATH_PREFIX}')
-        print(f'Result: {result}')
         if 'Contents' in result:
             print('ERROR! This version already exists. Please bump version with variable VERSION, and run the script again!')
             os.remove(zip_path)
@@ -53,8 +53,9 @@ def run():
                                './sam-templates/sam-template-destination.yaml', region)
         if not uploaded:
             sys.exit('Error occurred while uploading destination sam template')
+        successful_uploads += 1
     os.remove(zip_path)
-    print('Finished uploading resources successfully!')
+    print(f'Successfully uploaded {successful_uploads} out of {len(AWS_REGIONS)} regions')
 
 
 def upload_file(s3_client, bucket, key, file_to_upload, region):
