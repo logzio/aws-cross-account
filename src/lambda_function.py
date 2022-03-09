@@ -46,15 +46,11 @@ def _extract_logs_from_data(data):
     for event in data_dict['logEvents']:
         new_log = data_dict.copy()
         new_log.pop("logEvents")
-        # if 'message' in event:
-        #     event['log_message'] = event['message']
-        #     event.pop('message')
         parsed_event = _json_string_to_dict(event)
         if 'message' in parsed_event and isinstance(parsed_event['message'], dict):
             new_log.update(parsed_event['message'])
             parsed_event.pop('message')
         new_log.update(parsed_event)
-        # new_log.update(_json_string_to_dict(event))
         new_log["@timestamp"] = new_log["timestamp"]
         new_log.pop("timestamp")
         new_log["id"] = str(new_log["id"])

@@ -25,11 +25,11 @@ Parameters:
 
   AccountsArns:
     Type: "CommaDelimitedList"
-    Description: "The ARNs should be in the format: arn:aws:logs:*:<<SENDER_ACCOUNT>>:*"
+    Description: "Comma-delimited list (no spaces) of all ARNs involved in this integration. This includes ARNs of the landing account and the accounts you'd like to send logs from. The ARNs should be specified as follows: arn:aws:logs:*:<<ACCOUNT_NUMBER>>:*"
 
   SendingAccounts:
     Type: "String"
-    Description: "Comma delimited list of accounts to receive logs from."
+    Description: "Comma-delimited list (no spaces) of account numbers of the accounts you'd like to send logs from. Each account number should be wrapped in double-quotes."
 
 
 Outputs:
