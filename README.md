@@ -178,6 +178,8 @@ resource "aws_cloudwatch_log_subscription_filter" "subscription_filter" {
 
 Give your logs some time to get from your system to ours, and then open [Kibana](https://app.logz.io/#/dashboard/kibana).
 
+**Note:** If your log group is not under the required format, the logs will arrive under the default type `aws-cross-account`. Otherwise, the type will be the service you sent the logs from.
+
 ### Update the integration
 
 If you need to add more accounts to an existing integration, you can update the deployed stacks as follows.
