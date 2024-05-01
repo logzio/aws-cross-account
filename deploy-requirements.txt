@@ -1,0 +1,7 @@
+# Requirements for deploy.py
+os
+subprocess
+sys
+time
+boto3
+ruamel.yaml
