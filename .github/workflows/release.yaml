@@ -18,3 +18,5 @@ jobs:
           python deploy.py
         env:
           VERSION: ${{ github.event.release.tag_name }}
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
