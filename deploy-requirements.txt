@@ -1,5 +1,4 @@
 # Requirements for deploy.py
-os
 subprocess
 sys
 time
