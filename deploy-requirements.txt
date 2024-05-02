@@ -1,6 +1,3 @@
 # Requirements for deploy.py
-subprocess
-sys
-time
 boto3
 ruamel.yaml
