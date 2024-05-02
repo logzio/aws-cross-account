@@ -1,0 +1,22 @@
+name: Release
+on:
+  workflow_dispatch:
+  release:
+    types: [published]
+jobs:
+  uplode:
+    name: Build and Upload the new version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.9'
+      - name: Run deploy.py
+        run: |
+          pip install -r deploy-requirements.txt
+          python deploy.py
+        env:
+          VERSION: ${{ github.event.release.tag_name }}
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}

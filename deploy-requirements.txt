@@ -1,0 +1,3 @@
+# Requirements for deploy.py
+boto3
+ruamel.yaml
